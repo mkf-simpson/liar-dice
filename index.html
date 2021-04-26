@@ -3,14 +3,323 @@
   <head>
     <title>Liar Dice</title>
     <style>
-      /*paste styles here*/
+      /* Intial setup for displaying things in center */
+.hidden {
+  display: none;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: center;
+  flex-wrap: wrap;
+  align-content: center;
+  font-family: 'Roboto', sans-serif;
+
+  background: linear-gradient(top, #222, #333);
+}
+
+/* code starts here */
+
+.first-face {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dice {
+  padding: 8px;
+  background-color: white;
+  width: 104px;
+  height: 104px;
+  border-radius: 10%;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  border: 4px solid black;
+}
+
+.dot {
+  display: block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: black;
+}
+
+.second-face {
+  display: flex;
+  justify-content: space-between;
+}
+
+.second-face .dot:nth-of-type(2) {
+  align-self: flex-end;
+}
+
+.third-face {
+  display: flex;
+  justify-content: space-between;
+}
+
+.third-face .dot:nth-of-type(1) {
+  align-self: flex-end;
+}
+
+.third-face .dot:nth-of-type(2) {
+  align-self: center;
+}
+
+
+.fourth-face,
+.sixth-face,
+.fifth-face {
+  display: flex;
+  justify-content: space-between;
+}
+
+.fourth-face .column,
+.sixth-face .column,
+.fifth-face .column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.fifth-face .column:nth-of-type(2) {
+  justify-content: center;
+}
+
+.buttons {
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+#dice_container {
+  margin: auto;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: center;
+  flex-wrap: wrap;
+  align-content: center;
+  font-family: 'Roboto', sans-serif;
+
+  background: linear-gradient(top, #222, #333);
+}
+
+
+
+button {
+  font-weight: bold;
+  border: 2px black solid;
+  font-size: 24px;
+  padding: 24px;
+  cursor: pointer;
+  width: 100%;
+  background: white;
+}
+
+button+button {
+  margin-top: 8px;
+}
+
+button#reset {
+  color: #6abf69;
+  border-color: #6abf69;
+}
+
+button#reset:hover {
+  color: #6abf69;
+  background: #d7ffd9;
+}
+
+button#remove {
+  color: #ff7d47;
+  border-color: #ff7d47
+}
+
+button#remove:hover {
+  background: #ffddc1;
+}
+
+.wrapper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#endGameBlock {
+  height: 100%;
+  display: none;
+}
+
     </style>
   </head>
   <body>
-    <!-- paste markup here -->
+    <div class="hidden" id="container">
+      <div class="dice first-face" data-number="1">
+        <span class="dot"></span>
+      </div>
+
+      <div class="dice second-face" data-number="2">
+        <span class="dot">
+        </span>
+        <span class="dot">
+        </span>
+      </div>
+
+      <div class="dice third-face" data-number="3">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+
+      <div class="fourth-face dice" data-number="4">
+        <div class="column">
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+        <div class="column">
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+      </div>
+      <div class="fifth-face dice" data-number="5">
+
+        <div class="column">
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+
+        <div class="column">
+          <span class="dot"></span>
+        </div>
+
+        <div class="column">
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+
+      </div>
+      <div class="sixth-face dice" data-number="6">
+        <div class="column">
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+        <div class="column">
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="wrapper">
+      <div id="dice_container"></div>
+
+      <div class="buttons" id="gameButtons">
+        <button id="reset">Reset</button>
+        <button id="remove">Remove one</button>
+      </div>
+
+
+
+      <div class="buttons" id="endGameBlock">
+        <div id="text" style="width: 100%"></div>
+        <button id="newGameBtn">New game</button>
+      </div>
+
+
+    </div>
     <script>
       document.addEventListener("DOMContentLoaded", (event) => {
-        // paste code here
+        let currentCount = 5;
+
+
+
+
+        function res() {
+          clearField()
+
+          console.log(currentCount)
+
+          currentCount
+            ?
+            drawDice() :
+            showEndGame()
+        }
+
+        function showEndGame() {
+
+          endGameBlock.style.display = "inherit"
+          gameButtons.style.display = "none"
+          dice_container.style.display = "none"
+
+          new Vara("#text", "https://rawcdn.githack.com/akzhy/Vara/ed6ab92fdf196596266ae76867c415fa659eb348/fonts/Satisfy/SatisfySL.json", [{
+            text: phrases[0], // String, text to be shown
+            fontSize: 56, // Number, size of the text
+            strokeWidth: 2,
+            textAlign:"center"
+          }]);
+
+        }
+
+        function newGame() {
+          currentCount = 5;
+          endGameBlock.style.display = "none"
+          dice_container.style.display = "flex"
+          gameButtons.style.display = "flex"
+          res()
+        }
+
+
+        function clearField() {
+          dice_container.querySelectorAll(".dice").forEach((e) => e.parentNode.removeChild(e));
+        }
+
+        function drawDice() {
+          const dice = Array.from({
+            length: currentCount
+          }, () => Math.round(Math.random() * currentCount) + 1);
+
+          dice.map((d) => container.querySelector(`[data-number="${d}"]`).cloneNode(true)).forEach((e) => document.querySelector("#dice_container").appendChild(e));
+        }
+
+        res();
+
+        reset.onclick = () => {
+          if (confirm("Are you sure?")) {
+            res();
+          }
+        }
+
+        remove.onclick = () => {
+          currentCount -= 1;
+          let el = dice_container.querySelector(".dice");
+          el.parentNode.removeChild(el);
+          res()
+        }
+
+        newGameBtn.onclick = () => {
+          newGame()
+        }
+
+
+        const phrases = ["You are a Pidor"]
+
       });
     </script>
   </body>
