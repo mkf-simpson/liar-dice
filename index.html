@@ -3,6 +3,7 @@
   <head>
     <title>Liar Dice</title>
     <script src="https://cdn.jsdelivr.net/npm/vara@1.2.0/src/vara.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ngx-long-press@0.0.1/dist/ngx-long-press.bundle.min.js"></script>
     <style>
       /* Intial setup for displaying things in center */
 .hidden {
@@ -232,7 +233,7 @@ button#remove:hover {
       <div id="dice_container"></div>
 
       <div class="buttons" id="gameButtons">
-        <button id="reset">Reset</button>
+        <button id="reset">Reroll</button>
         <button id="remove">Remove one</button>
       </div>
 
@@ -254,9 +255,6 @@ button#remove:hover {
 
         function res() {
           clearField()
-
-          console.log(currentCount)
-
           currentCount
             ?
             drawDice() :
@@ -313,6 +311,10 @@ button#remove:hover {
           el.parentNode.removeChild(el);
           res()
         }
+        
+        document.addEventListener('long-press', function(e) {
+          newGame()
+        });
 
         newGameBtn.onclick = () => {
           newGame()
