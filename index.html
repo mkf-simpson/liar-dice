@@ -3,7 +3,6 @@
   <head>
     <title>Liar Dice</title>
     <script src="https://cdn.jsdelivr.net/npm/vara@1.2.0/src/vara.min.js"></script>
-    <script src="https://github.com/john-doherty/long-press-event/blob/master/dist/long-press-event.min.js"></script>
     <style>
       /* Intial setup for displaying things in center */
 .hidden {
@@ -299,24 +298,21 @@ button#remove:hover {
 
         res();
 
-        reset.onclick = () => {
+        reset.ondblclick = () => {
           if (confirm("Are you sure?")) {
             res();
           }
         }
 
-        remove.onclick = () => {
+        remove.ondblclick = () => {
           currentCount -= 1;
           let el = dice_container.querySelector(".dice");
           el.parentNode.removeChild(el);
           res()
         }
         
-        document.addEventListener('long-press', function(e) {
-          newGame()
-        });
 
-        newGameBtn.onclick = () => {
+        newGameBtn.ondblclick = () => {
           newGame()
         }
 
