@@ -1,0 +1,192 @@
+/* Intial setup for displaying things in center */
+.hidden {
+display: none;
+}
+
+html,
+body {
+height: 100%;
+padding: 0;
+margin: 0;
+}
+
+body {
+display: flex;
+align-items: center;
+justify-content: center;
+vertical-align: center;
+flex-wrap: wrap;
+align-content: center;
+font-family: 'Roboto', sans-serif;
+
+background: linear-gradient(top, #222, #333);
+}
+
+/* code starts here */
+
+.first-face {
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.dice {
+padding: 8px;
+background-color: white;
+width: 104px;
+height: 104px;
+border-radius: 10%;
+margin-right: 10px;
+margin-bottom: 10px;
+border: 4px solid black;
+}
+
+.dot {
+display: block;
+width: 24px;
+height: 24px;
+border-radius: 50%;
+background-color: black;
+}
+
+.second-face {
+display: flex;
+justify-content: space-between;
+}
+
+.second-face .dot:nth-of-type(2) {
+align-self: flex-end;
+}
+
+.third-face {
+display: flex;
+justify-content: space-between;
+}
+
+.third-face .dot:nth-of-type(1) {
+align-self: flex-end;
+}
+
+.third-face .dot:nth-of-type(2) {
+align-self: center;
+}
+
+
+.fourth-face,
+.sixth-face,
+.fifth-face {
+display: flex;
+justify-content: space-between;
+}
+
+.fourth-face .column,
+.sixth-face .column,
+.fifth-face .column {
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+}
+
+.fifth-face .column:nth-of-type(2) {
+justify-content: center;
+}
+
+.buttons {
+margin-bottom: 12px;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-wrap: wrap;
+padding: 0 24px;
+}
+
+#dice_container {
+margin: auto;
+padding: 12px;
+display: flex;
+align-items: center;
+justify-content: center;
+vertical-align: center;
+flex-wrap: wrap;
+align-content: center;
+font-family: 'Roboto', sans-serif;
+
+background: linear-gradient(top, #222, #333);
+}
+
+
+
+button {
+font-weight: bold;
+border: 2px black solid;
+font-size: 24px;
+padding: 24px;
+cursor: pointer;
+width: 100%;
+background: white;
+}
+
+button+button {
+margin-top: 8px;
+}
+
+button#reset {
+color: #6abf69;
+border-color: #6abf69;
+}
+
+button#reset:hover {
+color: #6abf69;
+background: #d7ffd9;
+}
+
+button#remove {
+color: #ff7d47;
+border-color: #ff7d47
+}
+
+button#remove:hover {
+background: #ffddc1;
+}
+
+.wrapper {
+height: 100%;
+width: 100%;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+}
+
+#endGameBlock {
+height: 100%;
+display: none;
+}
+
+
+
+#menu {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  transform: translateY(184px);
+  display: flex;
+  flex-direction: column;
+}
+
+#menu_label {
+  display: inline-block;
+  height: 48px;
+  text-align: center;
+  cursor: pointer;
+  transform-origin: center;
+  transform: rotate(180deg);
+
+}
+
+#menu_item:checked + #menu {
+  transform: translateY(0px);
+}
+
+#menu_item:checked + #menu > #menu_label {
+  transform: rotate(0deg);
+}

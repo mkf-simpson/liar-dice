@@ -4,169 +4,8 @@
     <title>Liar Dice</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <script src="https://cdn.jsdelivr.net/npm/vara@1.2.0/src/vara.min.js"></script>
-    <style>
-      /* Intial setup for displaying things in center */
-.hidden {
-  display: none;
-}
-
-html,
-body {
-  height: 100%;
-}
-
-body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  vertical-align: center;
-  flex-wrap: wrap;
-  align-content: center;
-  font-family: 'Roboto', sans-serif;
-
-  background: linear-gradient(top, #222, #333);
-}
-
-/* code starts here */
-
-.first-face {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.dice {
-  padding: 8px;
-  background-color: white;
-  width: 104px;
-  height: 104px;
-  border-radius: 10%;
-  margin-right: 10px;
-  margin-bottom: 10px;
-  border: 4px solid black;
-}
-
-.dot {
-  display: block;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background-color: black;
-}
-
-.second-face {
-  display: flex;
-  justify-content: space-between;
-}
-
-.second-face .dot:nth-of-type(2) {
-  align-self: flex-end;
-}
-
-.third-face {
-  display: flex;
-  justify-content: space-between;
-}
-
-.third-face .dot:nth-of-type(1) {
-  align-self: flex-end;
-}
-
-.third-face .dot:nth-of-type(2) {
-  align-self: center;
-}
-
-
-.fourth-face,
-.sixth-face,
-.fifth-face {
-  display: flex;
-  justify-content: space-between;
-}
-
-.fourth-face .column,
-.sixth-face .column,
-.fifth-face .column {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.fifth-face .column:nth-of-type(2) {
-  justify-content: center;
-}
-
-.buttons {
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-#dice_container {
-  margin: auto;
-  padding: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  vertical-align: center;
-  flex-wrap: wrap;
-  align-content: center;
-  font-family: 'Roboto', sans-serif;
-
-  background: linear-gradient(top, #222, #333);
-}
-
-
-
-button {
-  font-weight: bold;
-  border: 2px black solid;
-  font-size: 24px;
-  padding: 24px;
-  cursor: pointer;
-  width: 100%;
-  background: white;
-}
-
-button+button {
-  margin-top: 8px;
-}
-
-button#reset {
-  color: #6abf69;
-  border-color: #6abf69;
-}
-
-button#reset:hover {
-  color: #6abf69;
-  background: #d7ffd9;
-}
-
-button#remove {
-  color: #ff7d47;
-  border-color: #ff7d47
-}
-
-button#remove:hover {
-  background: #ffddc1;
-}
-
-.wrapper {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-#endGameBlock {
-  height: 100%;
-  display: none;
-}
-
-    </style>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
   </head>
   <body>
     <div class="hidden" id="container">
@@ -228,97 +67,24 @@ button#remove:hover {
 
       </div>
     </div>
-
     <div class="wrapper">
       <div id="dice_container"></div>
 
-      <div class="buttons" id="gameButtons">
-        <button id="reset">Reroll</button>
-        <button id="remove">Remove one</button>
+      <input id="menu_item"  type="checkbox" hidden/>
+      <div id="menu">
+        <label id="menu_label" for="menu_item">
+          <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 0 24 24" width="48px" fill="#000000"><path d="M24 24H0V0h24v24z" fill="none" opacity=".87"/><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6-1.41-1.41z"/></svg>
+        </label>
+        <div class="buttons" id="gameButtons">
+          <button id="reset">Reroll</button>
+          <button id="remove">Remove one</button>
+        </div>
       </div>
-
-
 
       <div class="buttons" id="endGameBlock">
-        <div id="text" style="width: 100%"></div>
+        <div id="varaContainer" style="width: 100%"></div>
         <button id="newGameBtn">New game</button>
       </div>
-
-
     </div>
-    <script>
-      document.addEventListener("DOMContentLoaded", (event) => {
-        let currentCount = 5;
-
-
-
-
-        function res() {
-          clearField()
-          currentCount
-            ?
-            drawDice() :
-            showEndGame()
-        }
-
-        function showEndGame() {
-
-          endGameBlock.style.display = "inherit"
-          gameButtons.style.display = "none"
-          dice_container.style.display = "none"
-
-          new Vara("#text", "https://rawcdn.githack.com/akzhy/Vara/ed6ab92fdf196596266ae76867c415fa659eb348/fonts/Satisfy/SatisfySL.json", [{
-            text: phrases[0], // String, text to be shown
-            fontSize: 56, // Number, size of the text
-            strokeWidth: 2,
-            textAlign:"center"
-          }]);
-
-        }
-
-        function newGame() {
-          currentCount = 5;
-          endGameBlock.style.display = "none"
-          dice_container.style.display = "flex"
-          gameButtons.style.display = "flex"
-          res()
-        }
-
-
-        function clearField() {
-          dice_container.querySelectorAll(".dice").forEach((e) => e.parentNode.removeChild(e));
-        }
-
-        function drawDice() {
-          const dice = Array.from({
-            length: currentCount
-          }, () => Math.round(Math.random() * currentCount) + 1);
-
-          dice.map((d) => container.querySelector(`[data-number="${d}"]`).cloneNode(true)).forEach((e) => document.querySelector("#dice_container").appendChild(e));
-        }
-
-        res();
-
-        reset.ondblclick = () => {
-            res();
-        }
-
-        remove.ondblclick = () => {
-          currentCount -= 1;
-          let el = dice_container.querySelector(".dice");
-          el.parentNode.removeChild(el);
-          res()
-        }
-        
-
-        newGameBtn.ondblclick = () => {
-          newGame()
-        }
-
-
-        const phrases = ["You are a Pidor"]
-
-      });
-    </script>
   </body>
 </html>
